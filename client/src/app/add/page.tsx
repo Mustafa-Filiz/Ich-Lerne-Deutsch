@@ -16,29 +16,27 @@ import { useForm } from 'react-hook-form'
 import { Levels } from '@/utils/enums'
 import BasicSelect from '@/components/BasicSelect'
 
-const formSchema = z
-  .object({
-    artikel: z.string().regex(/(der|die|das)/, 'Must be a valid Artikel.'),
-    word_german: z.string().min(2, {
-      message: 'Word is required.',
-    }),
-    word_german_plural: z.string().min(2, {
-      message: 'Word plural form is required.',
-    }),
-    meaning_english: z.string().min(2, {
-      message: 'English meaning is required.',
-    }),
-    meaning_turkish: z.string().min(2, {
-      message: 'Turkish meaning is required.',
-    }),
-    level: z.nativeEnum(Levels, {
-      required_error: 'Level is required.',
-    }),
-    section: z.string({
-      required_error: 'Section is required.',
-    }),
-  })
-  .required()
+const formSchema = z.object({
+  artikel: z.string().regex(/(der|die|das)/, 'Must be a valid Artikel.'),
+  word_german: z.string().min(2, {
+    message: 'Word is required.',
+  }),
+  word_german_plural: z.string().min(2, {
+    message: 'Word plural form is required.',
+  }),
+  meaning_english: z.string().min(2, {
+    message: 'English meaning is required.',
+  }),
+  meaning_turkish: z.string().min(2, {
+    message: 'Turkish meaning is required.',
+  }),
+  level: z.nativeEnum(Levels, {
+    required_error: 'Level is required.',
+  }),
+  module: z.string({
+    required_error: 'Module is required.',
+  }),
+})
 
 function Add() {
   const form = useForm<z.infer<typeof formSchema>>({
@@ -50,7 +48,7 @@ function Add() {
       meaning_english: '',
       meaning_turkish: '',
       level: Levels.a1,
-      section: '1',
+      module: '1',
     },
   })
 
@@ -77,9 +75,7 @@ function Add() {
               <FormControl>
                 <Input placeholder="Der, Die or Das" {...field} />
               </FormControl>
-              {/* <FormDescription>
-                  This is your public display name.
-                </FormDescription> */}
+
               <FormMessage />
             </FormItem>
           )}
@@ -93,9 +89,7 @@ function Add() {
               <FormControl>
                 <Input placeholder="Tür, Fenster ..." {...field} />
               </FormControl>
-              {/* <FormDescription>
-                  This is your public display name.
-                </FormDescription> */}
+
               <FormMessage />
             </FormItem>
           )}
@@ -109,9 +103,7 @@ function Add() {
               <FormControl>
                 <Input placeholder="Türen, Fenster ..." {...field} />
               </FormControl>
-              {/* <FormDescription>
-                  This is your public display name.
-                </FormDescription> */}
+
               <FormMessage />
             </FormItem>
           )}
@@ -125,9 +117,7 @@ function Add() {
               <FormControl>
                 <Input placeholder="Door, Window ..." {...field} />
               </FormControl>
-              {/* <FormDescription>
-                  This is your public display name.
-                </FormDescription> */}
+
               <FormMessage />
             </FormItem>
           )}
@@ -141,9 +131,7 @@ function Add() {
               <FormControl>
                 <Input placeholder="Kapi, Pencere ..." {...field} />
               </FormControl>
-              {/* <FormDescription>
-                  This is your public display name.
-                </FormDescription> */}
+
               <FormMessage />
             </FormItem>
           )}
@@ -167,26 +155,24 @@ function Add() {
                     }))}
                   />
                 </FormControl>
-                {/* <FormDescription>
-                  This is your public display name.
-                </FormDescription> */}
+
                 <FormMessage />
               </FormItem>
             )}
           />
           <FormField
             control={form.control}
-            name="section"
+            name="module"
             render={({ field }) => (
               <FormItem className="flex-1">
-                <FormLabel>Section</FormLabel>
+                <FormLabel>Module</FormLabel>
                 <FormControl>
                   <BasicSelect
                     name="section"
                     value={field.value}
                     onChange={field.onChange}
                     defaultValue={field.value}
-                    options={Array.from({ length: 14 }, (_, i) => i + 1).map(
+                    options={Array.from({ length: 2 }, (_, i) => i + 1).map(
                       (i) => ({
                         value: String(i),
                         label: String(i),
@@ -194,9 +180,6 @@ function Add() {
                     )}
                   />
                 </FormControl>
-                {/* <FormDescription>
-                  This is your public display name.
-                </FormDescription> */}
                 <FormMessage />
               </FormItem>
             )}
